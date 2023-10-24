@@ -35,6 +35,11 @@ RUN wget -q -O - "https://github.com/koalaman/shellcheck/releases/download/${SHE
 RUN wget -q -O /usr/local/bin/hadolint "https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-Linux-x86_64" && \
   chmod 0755 /usr/local/bin/hadolint
 
+# Download kubectl Binary
+# hadolint ignore=DL4001
+RUN curl -L -o /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+  chmod 0755 /usr/local/bin/kubectl
+
 # Configure Non-Root User Settings And Project Path
 RUN groupadd -g ${USER_GROUP_ID} user && \
   useradd -u ${USER_USER_ID} -g ${USER_GROUP_ID} -c "Non-Root User" -d "/home/user" -l -m user && \
